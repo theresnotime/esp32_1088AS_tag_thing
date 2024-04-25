@@ -16,6 +16,7 @@ char* message_array[] = {
   "I merged to core and nothing broke.          Honest.",
   "@theresnotime@fox.nexus",
   "Hack on the code that runs this sign!",
+  "https://github.com/theresnotime/esp32_1088AS_tag_thing",
   "Community Tech rocks!",
   "GET_QUOTE",
   "Oooops, was that a bug?",
