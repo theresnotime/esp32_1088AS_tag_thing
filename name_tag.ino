@@ -54,9 +54,16 @@ void setup() {
   Display.setIntensity(1);
 }
 
-std::string getNextMessage() {
+std::string getNextMessage(String message_type) {
   HTTPClient http;
-  http.begin(api_url);
+  if (message_type == "GET_QUOTE") {
+    http.begin(quotes_url);
+  } else if (message_type == "GET_HASHTAG") {
+    http.begin(api_url);
+  } else {
+    return "Error fetching message from API :3";
+  }
+
   // Send HTTP GET request
   int http_response_code = http.GET();
   delay(100);
@@ -100,14 +107,14 @@ void loop() {
     while (i < message_array_size) {
       if (Display.displayAnimate()) {
         char* next_message = message_array[i];
-        if (String(next_message) == "GET_HASHTAG") {
+        if (String(next_message) == "GET_HASHTAG" || String(next_message) == "GET_QUOTE") {
           if (!wifi_enabled) {
             Display.displayClear();
             i++;
             continue;
           }
-          Serial.println("Getting message from API..");
-          next_message = &getNextMessage()[0];
+          Serial.println("Getting data from API (" + String(next_message) + ")...");
+          next_message = &getNextMessage(String(next_message))[0];
         }
         Serial.println(next_message);
         if (strlen(next_message) < 13) {
